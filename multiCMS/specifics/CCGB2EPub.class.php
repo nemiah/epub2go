@@ -24,27 +24,11 @@ class CCGB2EPub implements iCustomContent, iFormHandler {
 		return "GB2EPub";
 	}
 
+	function scripts(){
+		return ["./multiCMSData/GB2EPub.js"];
+	}
+	
 	function getCMSHTML(Seite $Seite = null, Content $Content = null){
-		
-		/*require_once Util::getRootPath()."ubiquitous/EPub/EPub.class.php";
-		require_once Util::getRootPath()."ubiquitous/EPub/iEPubParser.class.php";
-		require_once Util::getRootPath()."ubiquitous/EPub/gbSpiegelParserGUI.class.php";
-
-		#$HS = new HTMLSlicer(new GBTidy("http://gutenberg.spiegel.de/?id=5&xid=845&kapitel=1#gb_found"));
-		#$Ps = $this->findImages($HS);
-		#$Title = $HS->getTag("//div[@id='bookcoll_title']/b");
-		echo "<pre>";
-		$P = new gbSpiegelParserGUI();
-		$filename = $P->generateEPub("http://gutenberg.spiegel.de/?id=5&xid=845&kapitel=1#gb_found");
-		echo "</pre>";
-
-		
-		#foreach($Ps AS $P)
-		#	echo $P->asXML();
-		
-		
-		die("TEST");*/
-
 		$target = filter_input(INPUT_GET, "t");
 		
 		$default = "https://www.projekt-gutenberg.org/...";
@@ -97,57 +81,6 @@ class CCGB2EPub implements iCustomContent, iFormHandler {
 						GB2EPub.running = false;
 					}
 				});
-
-				var GB2EPub = {
-					counter: 0,
-					running: false,
-
-					doIT: function(){
-						if(GB2EPub.running){
-							alert('Bitte warten Sie, bis der Vorgang abgeschlossen ist.');
-							return;
-						}
-
-						
-						multiCMS.callHander('CCGB2EPub', 'convert', 'spiegelURL='+encodeURIComponent($('spiegelURL').value), function(transport){
-							if(!multiCMS.checkResponse(transport)) return;
-
-							var div = Builder.node('div', {'style': 'clear:both;margin-top:13px;display:none;', 'id': 'resultContainer'+GB2EPub.counter});
-
-							$('ePubDLs').appendChild(div);
-
-							$('resultContainer'+GB2EPub.counter).update(transport.responseText);
-
-							new Effect.Appear(div);
-
-							if($('beta').style.display == 'none') new Effect.Appear('beta');
-							+GB2EPub.counter++;
-						});
-					},
-
-					hideReport: function(){
-						new Effect.Fade('reportWindow', {duration: 0.3});
-						new Effect.Appear('ePub', {duration: 0.3});
-					},
-
-					showReport: function(title, author){
-						$('reportEPub').title.value = title;
-						$('reportEPub').author.value = author;
-						new Effect.Appear('reportWindow', {duration: 0.3});
-						new Effect.Fade('ePub', {duration: 0.3});
-						window.setTimeout('$(\'reportEPub\').description.focus();', 200);
-					},
-		
-					showQueueInfo: function(){
-						new Effect.Appear('queueInfoWindow', {duration: 0.3});
-						new Effect.Fade('ePub', {duration: 0.3});
-					},
-		
-					hideQueueInfo: function(){
-						new Effect.Fade('queueInfoWindow', {duration: 0.3});
-						new Effect.Appear('ePub', {duration: 0.3});
-					}
-				}
 				
 				window.onload = function(){
 					".($target ? "GB2EPub.doIT();" : "")."
@@ -242,8 +175,6 @@ class CCGB2EPub implements iCustomContent, iFormHandler {
 			<p>Die Warteschlange enthält momentan 0 Einträge.</p>
 		</div>";
 
-		#echo phpinfo();
-
 		return $html;
 	}
 
@@ -259,20 +190,10 @@ class CCGB2EPub implements iCustomContent, iFormHandler {
 		switch($valuesAssocArray["action"]){
 
 			case "convert":
-
 				require_once Util::getRootPath()."ubiquitous/EPub/EPub.class.php";
 				require_once Util::getRootPath()."ubiquitous/EPub/iEPubParser.class.php";
 				require_once Util::getRootPath()."ubiquitous/EPub/gbSpiegelParserGUI.class.php";
 
-				
-				#$AC = anyC::get("EPubDL", "EPubDLLink", $valuesAssocArray["spiegelURL"]);
-				#$AC->addAssocV3("EPubDLDone", "=", "0");
-				#$InQueue = $AC->getNextEntry();
-				
-				#if($InQueue != null)
-				#	die("Der gewünschte Titel befindet sich bereits in der Warteschlange an Position ".mEPubDL::getLinkPosition($valuesAssocArray["spiegelURL"]).".");
-				
-				
 				$P = new gbSpiegelParserGUI();
 				try {
 					$filename = $P->generateEPub($valuesAssocArray["spiegelURL"]);
@@ -318,9 +239,9 @@ class CCGB2EPub implements iCustomContent, iFormHandler {
 				$mail = new htmlMimeMail5();
 				$mail->setSubject("Fehlerbericht ePubi");
 				$mail->setText(utf8_decode("Autor: ".$valuesAssocArray["author"]."\nTitel: ".$valuesAssocArray["title"]."\nBeschreibung:".$valuesAssocArray["description"]));
-				$mail->setFrom("ePubi@Furtmeier.IT");
+				$mail->setFrom("report@epub2go.eu");
 
-				if($mail->send(array("Rainer@Furtmeier.IT")))
+				if($mail->send(array("report@epub2go.eu")))
 					echo "Vielen Dank für Ihre Meldung!";
 				else
 					echo "Es ist ein Fehler beim Mailversand aufgetreten. Bitte verwenden Sie das Forum.";
