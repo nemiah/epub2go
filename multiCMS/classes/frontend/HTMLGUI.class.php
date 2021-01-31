@@ -808,7 +808,23 @@ class HTMLGUI implements icontextMenu {
 		}
 		
 		if(isset($this->types[$as]) AND $this->types[$as] == "HTMLEditor") {
-			throw new Exception("HTMLEditor no longer supported!");
+			
+			/*$BO = array("'{$this->options[0]}'", "'{$this->options[1]}'");
+			if(isset($this->options[2]))
+				$BO[] = "'{$this->options[2]}'";
+			if(isset($this->options[3]))
+				$BO[] = "'{$this->options[3]}'";*/
+
+			$B = new Button("in Editor\nbearbeiten","editor");
+			$B->doBefore("Overlay.showDark(); %AFTER");
+			$B->popup("", "Editor", "tinyMCE", "-1", "editInPopup", ["'$this->FormID'", "'$as'"], "", "Popup.presets.large");
+			$B->className("backgroundColor2");
+
+			$ITA = new HTMLInput($as, "hidden", $this->attributes->$as);
+
+			return $B->__toString().$ITA;
+				
+			//throw new Exception("HTMLEditor no longer supported!");
 			/*$_SESSION["BPS"]->registerClass("WysiwygGUI");
 			$_SESSION["BPS"]->setACProperty("FieldClass", get_class($this->object));
 			$_SESSION["BPS"]->setACProperty("FieldClassID",$this->editedID);
