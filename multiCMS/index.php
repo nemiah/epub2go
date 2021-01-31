@@ -18,7 +18,7 @@
  *  2007 - 2020, open3A GmbH - Support@open3A.de
  */
 
-if(!function_exists("random_int")){
+if(!function_exists("random_int") AND !isset(filter_input(INPUT_GET, "ignoreVersion"))){
 	require_once "./system/basics.php";
 	
 	emoFatalError("I'm sorry, but your PHP version is too old.", "You need at least PHP version 7.0 to run this program.<br>You are using ".phpversion().". Please talk to your provider about this.", "open3A");
