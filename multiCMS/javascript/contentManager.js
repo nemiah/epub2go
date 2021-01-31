@@ -37,9 +37,10 @@ var contentManager = {
 	isAltUser: false,
 	updateTitle: true,
 	currentPlugin: null,
-	historyLeft: [],
-	historyRight: [],
+	historyLeft: {},
+	historyRight: {},
 	layout: "",
+	lastPlugin: {},
 	
 	maxHeight: function(){
 		var footerHeight = $j('#footer').outerHeight();
@@ -206,7 +207,7 @@ var contentManager = {
 
 	autoLogoutInhibitor: null,
 
-	switchApplication: function(propagate){
+	switchApplication: function(toApplication, propagate){
 		if(typeof propagate == "undefined")
 			propagate = true;
 		
@@ -215,7 +216,7 @@ var contentManager = {
 		Menu.refresh();
 		contentManager.emptyFrame("contentScreen");
 		Interface.setup(function(){ });
-		contentManager.loadDesktop();
+		contentManager.loadDesktop(toApplication);
 		contentManager.loadJS();
 		//contentManager.loadTitle();
 		contentManager.clearHistory();
@@ -225,8 +226,8 @@ var contentManager = {
 	},
 
 	clearHistory: function(){
-		contentManager.historyLeft = [];
-		contentManager.historyRight = []
+		//contentManager.historyLeft = {};
+		//contentManager.historyRight = {};
 	},
 
 	selectRow: function(currentElement, group){
@@ -240,17 +241,38 @@ var contentManager = {
 			$j(currentElement).addClass("lastSelected"+(typeof group != "undefined" ? " LSGroup"+group : ""));
 	},
 
-	loadDesktop: function(){
+	loadDesktop: function(ofApp){
 		contentManager.emptyFrame('contentLeft');
 		contentManager.emptyFrame('contentRight');
+		contentManager.emptyFrame('contentScreen');
+		//console.log(ofApp);
+		/*if(typeof ofApp != "undefined" && ofApp !== null && typeof contentManager.lastPlugin[ofApp] != "undefined"){
+			contentManager.loadPlugin(contentManager.lastPlugin[ofApp][0], contentManager.lastPlugin[ofApp][1]);
+			return;
+		}*/
+		
 		contentManager.loadFrame("contentScreen", "Desktop", 1, 0, "");
 		$j('.theOne').removeClass('theOne');
 	},
 	
 	loadPlugin: function(targetFrame, targetPlugin, bps, withId, options){
 		var page = 0;
-		if(contentManager.historyRight[targetPlugin])
-			page = contentManager.historyRight[targetPlugin][0];
+		
+		if(typeof contentManager.historyRight[Interface.application] == "undefined")
+			contentManager.historyRight[Interface.application] = [];
+		
+		if(typeof contentManager.historyLeft[Interface.application] == "undefined")
+			contentManager.historyLeft[Interface.application] = [];
+		
+		if(typeof contentManager.lastPlugin[Interface.application] == "undefined")
+			contentManager.lastPlugin[Interface.application] = [];
+		
+		
+		contentManager.lastPlugin[Interface.application] = [targetFrame, targetPlugin];
+		console.log(Interface.application);
+		
+		if(contentManager.historyRight[Interface.application][targetPlugin])
+			page = contentManager.historyRight[Interface.application][targetPlugin][0];
 		
 		contentManager.loadFrame(targetFrame, targetPlugin, -1, page, bps, function(){
 			if(typeof withId != "undefined" && withId != null){
@@ -277,7 +299,7 @@ var contentManager = {
 				if(historyPlugin == "ObjekteL")
 					historyPlugin = "mObjektL";
 
-				if(contentManager.historyLeft[historyPlugin] && contentManager.historyLeft[historyPlugin][1] != -1){
+				if(contentManager.historyLeft[Interface.application][historyPlugin] && contentManager.historyLeft[Interface.application][historyPlugin][1] != -1){
 					//console.log("HERE!");
 					//var found = false;
 					//if($j('#Browser'+oldName+contentManager.historyLeft[historyPlugin][1]).length)
@@ -287,9 +309,9 @@ var contentManager = {
 					//	found = true;
 					//console.log(found);
 					if(!Interface.mobile())
-						contentManager.loadFrame("contentLeft", contentManager.historyLeft[historyPlugin][0], contentManager.historyLeft[historyPlugin][1], 0, "", function(){
-							$j('#Browser'+oldName+contentManager.historyLeft[historyPlugin][1]).addClass("lastSelected");
-							$j('#BrowserMain'+contentManager.historyLeft[historyPlugin][1]).addClass("lastSelected");
+						contentManager.loadFrame("contentLeft", contentManager.historyLeft[Interface.application][historyPlugin][0], contentManager.historyLeft[Interface.application][historyPlugin][1], 0, "", function(){
+							$j('#Browser'+oldName+contentManager.historyLeft[Interface.application][historyPlugin][1]).addClass("lastSelected");
+							$j('#BrowserMain'+contentManager.historyLeft[Interface.application][historyPlugin][1]).addClass("lastSelected");
 						});
 
 				}
@@ -630,7 +652,7 @@ var contentManager = {
 			lastLoadedRightPage = page;
 			lastLoadedRight = withId;
 			contentManager.currentPlugin = plugin;
-			contentManager.historyRight[plugin] = [page];
+			contentManager.historyRight[Interface.application][plugin] = [page];
 		}
 
 		if(target == "contentLeft"){
@@ -638,7 +660,7 @@ var contentManager = {
 			lastLoadedLeftPage = page;
 			lastLoadedLeft = withId;
 			contentManager.currentPlugin = plugin;
-			contentManager.historyLeft["m"+plugin] = [plugin, withId];
+			contentManager.historyLeft[Interface.application]["m"+plugin] = [plugin, withId];
 		}
 
 		if(target == "contentScreen"){
