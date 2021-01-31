@@ -1,75 +1,56 @@
-
-var multiCMSMessages = {
-	A001:"Bitte geben Sie Ihren Namen an",
-	A002:"Bitte geben Sie eine korrekte E-Mailadresse an",
-	A003:"Bitte geben Sie einen Text ein",
-	A004:"Die eingegebene E-Mailadresse scheint nicht gültig zu sein",
-	/*
-	A005:"Bitte geben Sie eine Straße ein",
-	A006:"Bitte geben Sie eine Postleitzahl ein",
-	A007:"Bitte geben Sie einen Ort ein",
-	A008:"Bitte geben Sie eine Telefonnummer ein",*/
-	
-	E001:"Kann Formular nicht verarbeiten, keine HandlerID angegeben",
-	E002:"Die angegebene HandlerID existiert nicht"//,
-	//E003:"Kann Formular nicht verarbeiten, da vom Administrator keine Kontaktadresse eingetragen wurde.",
-	
-	//G: function(message) {return message;},
-	//A100: function(message) {return message;}
-}
-
 var multiCMS = {
+	isInit: false,
+	isOverlay: false,
+	
+	init: function(){
+		if(multiCMS.isInit) return;
+		
+		if(typeof Ajax != "object") {
+			alert("Sie müssen Prototype (http://www.prototypejs.org) laden, um diese Klasse (multiCMS) verwenden zu können");
+			return;
+		}
+	
+		multiCMS.isInit = true;
+	},
+	
 	formHandler: function(formID, onSuccessFunction, onErrorFunction){
-		if(!$('#'+formID)) alert("Formular nicht gefunden!");
+		multiCMS.init();
+		if(!multiCMS.isInit) return;
 		
-		$.ajax({
-			url: "/index.php?_="+Math.random(),
-			data: "formID="+formID+"&"+$('#'+formID).serialize(),
-			success: function(transport){
+		if(!$(formID)) alert("Formular nicht gefunden!");
+		if($(formID).elements.length == 0) alert("Keine Daten zum Speichern gefunden!");
+		
+		setString = "formID="+formID;
+		for(i = 0;i < $(formID).elements.length;i++) {
+			if($(formID).elements[i].name == "") continue;
 			
-				if(multiCMS.checkResponse(transport)){
-					if(typeof onSuccessFunction == "function")
-						onSuccessFunction(transport);
-				} else
-					if(typeof onErrorFunction == "function")
-						onErrorFunction(transport);
-			},
-			
-			type: "POST"
-		});
+			if($(formID).elements[i].type == "radio"){
+				if($(formID).elements[i].checked) setString += "&"+$(formID).elements[i].name+"="+encodeURIComponent($(formID).elements[i].value);
+			} else if($(formID).elements[i].type == "checkbox"){
+				if($(formID).elements[i].checked) setString += "&"+$(formID).elements[i].name+"=1";
+				else setString += "&"+$(formID).elements[i].name+"=0";
+			} else setString += "&"+$(formID).elements[i].name+"="+encodeURIComponent($(formID).elements[i].value);
+		}
+		
+		new Ajax.Request("/index.php",{method:'post', parameters: setString, onSuccess: function(transport){
+			if(multiCMS.checkResponse(transport)){
+				if(typeof onSuccessFunction == "function")
+					onSuccessFunction(transport);
+			} else
+				if(typeof onErrorFunction == "function")
+					onErrorFunction(transport);
+				
+		}});
 	},
 
-	getContent: function(HandlerName, Method, parameters, onSuccessFunction){
-		var setString = "";
-		jQuery.each(parameters, function(key, value) {
-			setString += (setString != '' ? ";;;" : "")+value;
-		});
-			
-		$.ajax({
-			url: "/index.php",
-			data: "AJAXClass="+HandlerName+"&AJAXMethod="+Method+"&AJAXParameters="+setString,
-			success: function(transport){
-			
-			if(!multiCMS.checkResponse(transport))
-				return;
-			
-			onSuccessFunction(transport);
+	callHander: function(HandlerName, action, values, onSuccessF){
 
-			},
-			
-			type: "GET"
-		});
-	},
+		setString = "formID=nix&HandlerName="+HandlerName+"&action="+action;
 
-	callHandler: function(HandlerName, action, values, onSuccessF, method){
-		var setString = "";
-		if(typeof method == "undefined")
-			method = "GET";
-		
 		if(typeof values == "string"){
 			if(values.indexOf("&") != 0)
 				values = "&"+values;
-			setString = setString + values;
+			setString  = setString + values;
 		}
 		
 		if(typeof values == "object"){
@@ -77,92 +58,146 @@ var multiCMS = {
 				setString += "&"+name+"="+value;
 			});
 		}
-		
-		$.ajax({
-			url: "/index.php",
-			data: "formID=nix&HandlerName="+HandlerName+"&action="+action+setString,
-			success: function(transport){
 
-				if(typeof onSuccessF == "undefined")
-					multiCMS.checkResponse(transport);
-				else {
-					if(transport.charAt(0) == "{" && transport.charAt(transport.length - 1) == "}")
-						transport = jQuery.parseJSON(transport);
-					
-					onSuccessF(transport);
-				}
-			},
-			
-			type: method
-		});
+
+		new Ajax.Request("./index.php",{method:'post', parameters: setString, onSuccess: function(transport){
+			if(typeof onSuccessF == "undefined") multiCMS.checkResponse(transport);
+			else onSuccessF(transport);
+		}});
 	},
-
-	checkResponse: function(transport) {
-		$(".errorField").removeClass("errorField");
-		$(".errorMessage").remove();
-			
-		if(typeof transport == "string" && transport.charAt(0) == "{" && transport.charAt(transport.length - 1) == "}"){
-			var obj = jQuery.parseJSON(transport);
-			if(obj.type)
-				transport = obj.type+":'"+obj[obj.type]+"'";
-			else
-				return true;
-		}
-		
-		if(typeof transport == "object")
-			transport = transport.type+":'"+transport[transport.type]+"'";
-		
 	
-		if(transport.search(/^error:/) > -1){
-			eval("var message = "+transport.replace(/error:/,"")+";");
+	checkResponse: function(transport) {
+		console.log(transport.responseText);
+		if(transport.responseText.search(/^error:/) > -1){
+			eval("var message = "+transport.responseText.replace(/error:/,"")+";");
 			alert("Es ist ein Fehler aufgetreten:\n"+message);
 			return false;
 		}
-		if(transport.search(/^alert:/) > -1){
-			eval("var message = "+transport.replace(/alert:/,"")+";");
+		if(transport.responseText.search(/^alert:/) > -1){
+			eval("var message = "+transport.responseText.replace(/alert:/,"")+";");
 			alert(message);
 			return false;
 		}
-		if(transport.search(/^message:/) > -1){
-			eval("var message = "+transport.replace(/message:/,"")+";");
+		if(transport.responseText.search(/^message:/) > -1){
+			eval("var message = "+transport.responseText.replace(/message:/,"")+";");
 			alert(message);
 			return true;
 		}
-		if(transport.search(/^redirect:/) > -1){
-			document.location.href=transport.replace(/redirect:/,"");
+		if(transport.responseText.search(/^redirect:/) > -1){
+			document.location.href=transport.responseText.replace(/redirect:/,"");
 		}
-		if(transport.search(/^location:/) > -1){
-			document.location.href="index.php?p="+transport.replace(/location:/,"");
+		if(transport.responseText.search(/^location:/) > -1){
+			document.location.href="index.php?p="+transport.responseText.replace(/location:/,"");
 		}
-		if(transport.search(/^permalink:/) > -1){
-			document.location.href = transport.replace(/permalink:/,"");
+		if(transport.responseText.search(/^permalink:/) > -1){
+			document.location.href = transport.responseText.replace(/permalink:/,"");
 		}
-		if(transport.search(/^reload/) > -1){
+		if(transport.responseText.search(/^reload/) > -1){
 			document.location.reload();
 		}
-		if(transport.search(/^validate/) > -1){
-			var ex = transport.replace(/validate:/,"").split(";");
-			$("[name="+ex[0]+"]").addClass("errorField");
-			$("[name="+ex[0]+"]").parent().append("<div class=\"errorMessage\">"+ex[1]+"</div>");
-			
-			$('html, body').animate({
-				scrollTop: $("[name="+ex[0]+"]").offset().top - 200
-			}, 1000);
-			
-			return false;
-		}
-		if(transport.search(/Fatal error/) > -1){
-			alert(transport.replace(/<br \/>/g,"\n").replace(/<b>/g,"").replace(/<\/b>/g,"").replace(/&gt;/g,">").replace(/^\s+/, '').replace(/\s+$/, ''));
+		if(transport.responseText.search(/Fatal error/) > -1){
+			alert(transport.responseText.replace(/<br \/>/g,"\n").replace(/<b>/g,"").replace(/<\/b>/g,"").replace(/&gt;/g,">").replace(/^\s+/, '').replace(/\s+$/, ''));
 			return false;
 		}
 		return true;
+	},
+	
+	showOverlay: function(){
+		multiCMS.init();
+		if(!multiCMS.isInit) return;
+		
+		if(!$('multiCMSOverlay')){
+			var div = new Element('div', {'class': 'overlay', 'id': 'multiCMSOverlay', 'style': 'display:none;'});
+			$$("body")[0].insert(div);
+		}
+		
+		multiCMS.isOverlay = true;
+		
+		multiCMS.fitOverlay();
+		
+		if(typeof Effect == "object")
+			new Effect.Appear('multiCMSOverlay', {duration:0.2});
+		else
+			$('multiCMSOverlay').style.display = "block";
+		
+	},
+	
+	fitOverlay: function(){
+		if(!multiCMS.isOverlay) return;
+		
+		var pageSize = multiCMS.getPageSize();
+		
+		$('multiCMSOverlay').style.height = pageSize[1]+"px";
+		$('multiCMSOverlay').style.width = pageSize[0]+"px";
+	},
+	
+	hideOverlay: function(){
+	
+		multiCMS.isOverlay = false;
+		
+		if(typeof Effect == "object")
+			new Effect.Fade('multiCMSOverlay', {duration:0.2});
+		else
+			$('multiCMSOverlay').style.display = "none";
+	},
+	
+	/**
+	 * Code from Lightbox
+	 **/
+    getPageSize: function() {
+	        
+	     var xScroll, yScroll;
+		
+		if (window.innerHeight && window.scrollMaxY) {	
+			xScroll = window.innerWidth + window.scrollMaxX;
+			yScroll = window.innerHeight + window.scrollMaxY;
+		} else if (document.body.scrollHeight > document.body.offsetHeight){ // all but Explorer Mac
+			xScroll = document.body.scrollWidth;
+			yScroll = document.body.scrollHeight;
+		} else { // Explorer Mac...would also work in Explorer 6 Strict, Mozilla and Safari
+			xScroll = document.body.offsetWidth;
+			yScroll = document.body.offsetHeight;
+		}
+		
+		var windowWidth, windowHeight;
+		
+		if (self.innerHeight) {	// all except Explorer
+			if(document.documentElement.clientWidth){
+				windowWidth = document.documentElement.clientWidth; 
+			} else {
+				windowWidth = self.innerWidth;
+			}
+			windowHeight = self.innerHeight;
+		} else if (document.documentElement && document.documentElement.clientHeight) { // Explorer 6 Strict Mode
+			windowWidth = document.documentElement.clientWidth;
+			windowHeight = document.documentElement.clientHeight;
+		} else if (document.body) { // other Explorers
+			windowWidth = document.body.clientWidth;
+			windowHeight = document.body.clientHeight;
+		}	
+		
+		// for small pages with total height less then height of the viewport
+		if(yScroll < windowHeight){
+			pageHeight = windowHeight;
+		} else { 
+			pageHeight = yScroll;
+		}
+	
+		// for small pages with total width less then width of the viewport
+		if(xScroll < windowWidth){	
+			pageWidth = xScroll;		
+		} else {
+			pageWidth = windowWidth;
+		}
+
+		return [pageWidth,pageHeight];
 	}
 }
-
-function focusMe(){
-	
-}
-
-function blurMe() {
-	
+if(Event.observe)
+	Event.observe(window, 'resize', multiCMS.fitOverlay);
+else {
+	if($)
+		$(window).resize(function() {
+			multiCMS.fitOverlay()
+		});
 }
