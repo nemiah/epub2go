@@ -72,7 +72,7 @@ class CCGB2EPub implements iCustomContent, iFormHandler {
 					}
 				});
 				
-				console.log($);
+				console.log(multiCMS);
 
 				window.onload = function(){
 					".($target ? "GB2EPub.doIT();" : "")."
