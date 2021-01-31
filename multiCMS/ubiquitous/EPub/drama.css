@@ -1,0 +1,504 @@
+/* Modifizierte Drama Styles von www.projekt-gutenberg.org - Stand: Januar 2020 */
+@page {
+  margin: 5pt;
+}
+body {
+  font-family: serif;
+  /*font-family: arial;margin-right: 10%;margin-left: 10%;margin-top: 0%;margin-bottom: 3%;*/
+}
+/* Inhaltsverzeichnis */
+.toc {
+  display: none;
+}
+/********************* Links *********************/
+a:link {
+  color: #039;
+  text-decoration: none;
+}
+.right {
+  text-align: right;
+}
+.left {
+  text-align: left;
+}
+/* Titelseite */
+.title {
+  /*to be set */
+}
+.subtitle {
+  color: darkgray;
+}
+.authorlist {
+  text-align: left;
+}
+.author {
+  color: gray;
+}
+.box {
+  margin: 1.5em 15%;
+  border: 1px solid #666;
+  padding: 1em;
+}
+.dedication {
+  text-indent: 0;
+  text-align: center;
+  font-size: 1.5em;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+/* Abbildungen */
+img {
+  max-width: 100%;
+}
+img.left {
+  float: left;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  margin-right: 0.5em;
+}
+img.right {
+  float: right;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  margin-left: 0.5em;
+}
+.figcaption {
+  text-indent: 0;
+  text-align: center;
+  font-style: italic;
+}
+.figure {
+  text-indent: 0;
+  text-align: center;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+/* Textformatierungen */
+.fraktur {
+  font-family: "Frankenstein", Times, serif;
+}
+.smallcaps {
+  font-variant: small-caps;
+}
+.lektorat {
+  color: red;
+}
+.motto {
+  text-indent: 0;
+  margin-right: 5em;
+  margin-left: 50%;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+.note {
+  line-height: 90%;
+  font-size: 90%;
+}
+.recipient {
+  margin-left: -1em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+/* Regie-Anweisung im Schauspiel */
+.regie, .action {
+  font-size: 90%;
+  font-style: italic;
+}
+/*.sender {
+  margin-left: 0;
+  font-style: italic;
+  font-weight: bold;
+  color: darkblue;
+  margin-left: 2em;
+}*/
+.signatur, .signature {
+  text-align: right;
+  margin-right: 2em;
+}
+/* Sprecher im Schauspiel. geändert. Re. */
+.speaker {
+  color: #333;
+  font-weight: bold;
+}
+.upper {
+  text-transform: uppercase;
+}
+/* Sperrsatz (Duden: Satzzeichen außer Punkt und Anführungszeichen werden mit gesperrt, Zahlen werden's nicht), wird von einigen Readern nicht unterstützt */
+.wide, .spaced {
+  letter-spacing: 0.15em;
+}
+/******************** Überschriften *******************/
+h1, h2, h3, h4, h6 {
+  text-align: center;
+}
+h5 {
+  text-align: center;
+  font-size: 90%;
+  color: #808080;
+  font-weight: normal;
+}
+/******************** Fließtext ********************/
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  margin-left: 2em;
+  text-indent: -2em;
+  text-align: justify;
+  widows: 2;
+  orphans: 2;
+}
+p.abstract, p.stage {
+  font-size: 90%;
+  font-style: italic;
+  margin-left: 3em;
+  margin-right: 3em;
+  text-indent: 0;
+  text-align: justify;
+}
+p.address {
+  text-align: right;
+  text-indent: 0;
+  font-style: italic;
+}
+p.center {
+  text-indent: 0;
+  margin-left: 0;
+  text-align: center;
+}
+p.centerbig {
+  margin-left: 0;
+  margin-bottom: 0.6em;
+  margin-top: 0.6em;
+  text-indent: 0;
+  text-align: center;
+  font-size: 115%;
+}
+p.centersml {
+  margin-left: 0;
+  text-indent: 0;
+  text-align: center;
+  font-size: 90%;
+  margin-bottom: 0.3em;
+  margin-top: 0.3em;
+}
+p.date {
+  text-align: right;
+  font-style: italic;
+}
+p.dblmarg {
+  text-indent: 0;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+p.epigraph {
+  text-indent: 0;
+  text-align: right;
+  margin-right: 5%;
+  font-style: italic;
+}
+p.initial {
+  text-indent: 0;
+  margin-left: 0;
+  text-align: justify;
+}
+p.initial:first-letter {
+  font-size: 180%;
+}
+p.left {
+  margin-left: 0;
+  text-indent: 0;
+  text-align: left;
+}
+p.leftjust {
+  text-indent: 0;
+  margin-left: 0;
+  text-align: justify;
+}
+p.leftmarg {
+  text-indent: 0;
+  text-align: left;
+  margin-left: 2em;
+}
+p.line {
+  text-align: left;
+  text-indent: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+p.poem, p.vers {
+  text-indent: 0;
+  text-align: left;
+  margin-left: 2em;
+}
+p.prosa {
+  margin-left: 0;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  text-indent: 0.8em;
+  text-align: justify;
+}
+p.right {
+  margin-left: 0;
+  text-indent: 0;
+  text-align: right;
+}
+p.scene {
+  text-align: center;
+  margin-left: 0;
+  text-indent: 0;
+  font-style: italic;
+}
+/********************* Linien im Text *********************/
+hr {
+  border: 1px solid;
+  text-align: center;
+  color: #999;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+hr.short {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 40%;
+  width: 20%;
+  text-align: center;
+}
+hr.star {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  width: 20%;
+}
+/********************* Absatzübergreifende Formatierung ********************/
+div.epigraph {
+  margin-left: 50%;
+  margin-right: 5%;
+  font-style: italic;
+}
+div.motto p {
+  text-align: left;
+  text-indent: 0;
+  margin-right: 5em;
+}
+div.titlepage {
+  text-align: center;
+}
+div.navi {
+  text-align: center;
+}
+/********************* Gedichte *********************/
+div.poem {
+  text-align: left;
+  margin: 1em 2em;
+}
+div.poem blockquote {
+  text-align: left;
+  text-indent: 0;
+  margin-left: 1em;
+}
+div.poem blockquote p {
+  text-align: left;
+  text-indent: 0;
+  margin-left: 1em;
+}
+div.vers {
+  text-indent: 0;
+  text-align: left;
+  margin: 1em 2em;
+}
+div.vers p {
+  text-indent: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+/********************* Briefe *********************/
+div.letter {
+  text-align: left;
+  margin-left: 1.5em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+div.letter p {
+  text-indent: 0;
+}
+/********************* Tabellen  *********************/
+td {
+  /*font-family: arial;*/
+}
+table.left {
+  margin-left: 0;
+  margin-right: auto;
+}
+table.poem {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+table.right {
+  margin-left: auto;
+  margin-right: 0;
+}
+table.toc {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0.3em;
+  text-align: center;
+}
+table.toc td {
+  padding: 0 0.25em;
+  text-align: left;
+}
+table.true {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+  text-align: left;
+}
+/* Definitionsliste */
+dd {
+  margin-left: 2em;
+}
+dl {
+  margin-left: 1.5em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+dt {
+  font-weight: bold;
+  margin-top: 4pt;
+}
+/* Ungeordnete Liste */
+ul {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+/* Löschung und Einfügung */
+del {
+  color: red;
+}
+ins {
+  color: blue;
+}
+/* Zeile mit 3 Sternen: <p class="stars"><sup>*</sup> <sub>*</sub> <sup>*</sup></p> */
+p.stars {
+  text-indent: 0;
+  text-align: center;
+  font-size: 200%;
+  letter-spacing: 0.3em;
+  margin-top: 0.5em;
+  margin-bottom: 0;
+}
+/* Hochstellung ohne Vergößerung des Zeilenabstandes */
+sup {
+  font-size: 70%;
+  vertical-align: text-top;
+}
+sub {
+  font-size: 70%;
+  vertical-align: text-bottom;
+}
+/* Formatierung von Brüchen */
+sup.fract {
+  font-size: 70%;
+  vertical-align: text-top;
+}
+sub.fract {
+  font-size: 70%;
+  vertical-align: text-bottom;
+}
+.mainnav {
+  font-family: Arial;
+  background-color: #fff;
+  text-align: center;
+  border-top: 1px #d26402 solid;
+  border-bottom: 1px #d26402 solid;
+}
+.autalpha {
+  font-family: Arial;
+  text-align: center;
+}
+.trenner {
+  font-size: 10pt;
+  font-weight: bold;
+  color: #d26402;
+}
+tt {
+  font-family: Courier;
+}
+/* besser 
+
+span.truetype {
+  font-family: monospace;
+}*/
+/* Zu überprüfende Klassen: Sind sie korrekt oder machen sie Sinn für ein EBook? */
+a:visited {
+  color: #039;
+  text-decoration: none;
+}
+a:hover {
+  color: #039;
+  text-decoration: none;
+  background-color: #e0e0e0;
+}
+a:active {
+  color: #039;
+  text-decoration: none;
+}
+.online {
+  display: none;
+}
+.hidden {
+  display: none;
+}
+span.tooltip {
+  color: #800000;
+}
+span.footnote {
+  display: inline;
+  color: #505050;
+  font-size: 90%;
+}
+span.footnote a:hover {
+  background-color: #2B2E21;
+  color: #fff;
+}
+span.footnote a:link span, span.footnote a:visited span {
+  display: none;
+}
+span.footnote a:hover span.fntext {
+  position: absolute;
+  margin: 20px;
+  background-color: beige;
+  max-width: 400px;
+  padding: 5px 10px 5px 10px;
+  border: 1px solid #C0C0C0;
+  font: normal 12px/14px arial;
+  color: #000;
+  text-align: left;
+  display: block;
+  text-decoration: none;
+  left: 10px;
+}
+span.footnote:before {
+  content: " [Fußnote: ";
+  color: #505050;
+}
+span.footnote:after {
+  content: "] ";
+  color: #505050;
+}
+/* Seitennummern */
+a.pageref {
+  display: none;
+}
+a.pageref:before {
+  content: "[";
+}
+a.pageref:after {
+  content: "]";
+}
+span.teletype {
+  font-family: monospace;
+}

@@ -1,0 +1,30 @@
+@CHARSET "UTF-8";
+
+.AutoComplete {
+	position:absolute;
+	border-width: 1px;
+	margin-top:-1px;
+	border-style: solid;
+	width:300px;
+	z-index:100000;
+}
+
+#contentRight .AutoComplete {
+	width:400px;
+	margin-left:-30px;
+	box-sizing: border-box;
+}
+
+.AutoComplete tr:hover {
+	background-color:white;
+}
+
+.ACHandler {
+	padding:5px;
+}
+
+.AutoComplete .prettySubtitle {
+	font-size: 15px;
+	padding-top:10px;
+	padding-bottom:5px;
+}

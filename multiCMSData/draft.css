@@ -1,0 +1,184 @@
+* {
+	padding:0px;
+	margin:0px;
+}
+
+body {
+	background-color:white;
+	color:black;
+	font-size:12px;
+	font-family:sans-serif;
+	background-repeat:repeat-x;
+	background-image:url(../multiCMSData/top.png);
+	background-position:50% 0%;
+}
+
+a:link, a:active, a:visited {
+	color:black;
+}
+a:hover {
+	text-decoration:none;
+}
+
+input, select, textarea {
+	border: 0px;
+	border-bottom: 1px solid #41799c;
+	padding-top:3px;
+	padding-bottom:3px;
+	width:300px;
+	background-color:#d5e7f2;
+	color:black;
+}
+
+textarea {
+	height:300px;
+}
+
+h1 {
+	padding:5px;
+	padding-bottom:0px;
+	margin-bottom:30px;
+	font-size:20px;
+	color:#336699;
+	padding-top:40px;
+}
+
+h2 {
+	font-size:1.5em;
+	padding-top:15px;
+	padding-bottom:5px;
+	border-bottom:1px solid #54778c;
+	color:#182d39;
+	margin-right:20px;
+}
+
+label {
+	width:150px;
+	text-align:right;
+	font-weight:bold;
+	display:block;
+}
+
+table {
+	width:520px;
+}
+
+td {
+	padding:3px;
+}
+
+img {
+	border:0px;
+}
+
+img[onclick]{
+	cursor:pointer;
+}
+
+img[onclick]:hover, a img:hover{
+	opacity: 0.5;
+}
+
+.header {
+	height:78px;
+}
+
+.header p {
+	margin-left:40px;
+	padding-top:25px;
+	font-size:30px;
+	font-weight:bold;
+	color:#155177;
+	letter-spacing: 3px;
+}
+
+.bgWrapper {
+	margin-right:34px;
+	background-color:white;
+	background-image:url(../multiCMSData/center.png);
+	background-repeat:repeat-x;
+}
+
+.wrapper {
+	background-image:url(../multiCMSData/left.png);
+	background-repeat:no-repeat;
+	width:780px;
+	margin:auto;
+	margin-bottom:50px;
+}
+.navi {
+	float:left;
+	width:130px;
+	margin-top:50px;
+	margin-left:33px;
+	height:410px;
+}
+
+.navi a:link, .navi a:active, .navi a:visited {
+	color:#165278;
+	text-decoration:none;
+}
+.navi a:hover {
+	color:#99c6e2;
+	text-decoration:none;
+}
+
+.navi .tab {
+	margin-bottom:6px;
+}
+
+.navi a {
+	font-size:13px;
+	width:100%;
+	display:block;
+}
+
+.navi .current a:link, .navi .current a:active, .navi .current a:visited {
+	color:black;
+}
+
+.navi .subcategory {
+	margin-left:10px;
+	margin-bottom:15px;
+}
+
+.navi .separator {
+	padding-top:10px;
+	padding-bottom:5px;
+	font-weight:bold;
+	border-bottom: 1px solid grey;
+	margin-bottom: 5px;
+}
+
+.spacer{
+}
+
+.text {
+	margin-left:210px;
+	background-repeat:no-repeat;
+	background-image:url(../multiCMSData/right.png);
+	background-position:top right;
+}
+.text p {
+	margin-right:20px;
+	padding:5px;
+}
+
+.text ul, .text ol {
+	padding:5px;
+	margin-left:20px;
+}
+
+.text li {
+	margin-bottom:7px;
+}
+.footer {
+	clear:both;
+}
+
+.overlay {
+	background-color:white;
+	position:absolute;
+	top:0px;
+	left:0px;
+}

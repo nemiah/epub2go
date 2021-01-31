@@ -1,0 +1,222 @@
+#container {
+	/*width:100%;*/	
+	min-height:100%;
+	position:relative;
+}
+
+#wrapper {
+	border-top-width:0px;
+	border-top-style: solid;
+	border-bottom-width:0px;
+	border-bottom-style: solid;
+	clear:both;
+	padding-bottom:70px;
+	/*-moz-box-shadow: -4px -2px 4px #AAA;
+	-webkit-box-shadow: -4px -2px 4px #AAA;
+	box-shadow: -4px -2px 4px #AAA;*/
+}
+
+@media only screen and (min-width: 1802px) {
+	#wrapper {
+		border-left:1px solid grey;
+		border-right:1px solid grey;
+		max-width:1800px;
+		margin:auto;
+	}
+	
+	#container {
+		background-color:#eee;
+	}
+}
+
+/*
+#wrapperTable {
+	width:100%;
+	padding:0px;
+	margin:0px;
+}*/
+
+#wrapperHandler {
+	padding:5px;
+	text-align:center;
+	border-style:solid;
+	border-width:1px;
+	border-bottom-width:0px;
+	display:none;
+}
+
+#wrapperTableTd1 {
+	/*display:inline-block;*/
+	padding:0px;
+	/*vertical-align:top;*/
+	margin:0px;
+	float:left;
+}
+
+#wrapperTableTd3 {
+	/*display:inline-block;*/
+	padding:0px;
+	float:right;
+	/*vertical-align:top;*/
+	margin:0px;
+}
+
+#wrapperTableTd2 {
+	/*display:inline-block;*/
+	float:right;
+	padding:0px;
+	/*vertical-align:top;*/
+	margin:0px;
+
+}
+
+#contentLeft {
+	float:left;
+	padding-bottom:10px;
+	padding-top:10px;
+	width:430px;
+}
+
+#contentLeft p {
+	padding:5px;
+}
+
+#contentLeft table {
+	width:100%;
+	max-width:410px;
+	margin:auto;
+	border-left-width:0px;
+	border-left-style: solid;
+}
+
+#contentLeft td table, #contentLeft caption table {
+	width:100%;
+	border-left:0px;
+}
+
+#contentLeft .Tab, #contentLeft .lightTab {
+	margin-right:10px;
+}
+/*
+#contentLeft caption div {
+	font-weight:normal;
+	letter-spacing:normal;
+}
+*/
+
+#contentRight, #contentCenter {
+	margin-left:auto;
+	padding-bottom:10px;
+	padding-top:10px;
+	width:400px;
+}
+
+#contentRight table, #contentCenter table {
+	border-right-width:0px;
+	border-right-style: solid;
+	margin-right:10px;
+	max-width:390px;
+	width:100%;
+}
+
+#contentRight .Tab {
+	/*margin-left:10px;*/
+}
+
+#contentLeft:empty, #contentRight:empty, #contentCenter:empty {
+    /*display:none;*/
+	padding:0px;
+}
+
+#contentScreen table {
+	margin:auto;
+	width:99%;
+}
+
+#contentScreen td {
+	padding:1px;
+	padding-left:3px;
+	padding-right:3px;
+}
+
+#contentScreen p {
+	padding:5px;
+}
+
+#contentBelow {
+	padding-top:20px;
+}
+
+#contentBelow p {
+	line-height:1.5;
+	color:#333;
+	font-size:15px;
+}
+
+#contentBelowContent {
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+}
+
+caption[onclick] {
+	cursor:pointer;
+}
+
+caption {
+	background-repeat:no-repeat;
+	background-position:right;
+}
+
+#windows .Tab, #windowsPersistent .Tab {
+	margin-left:auto;
+}
+
+#windows table, #windowsPersistent table {
+	margin:auto;
+	width:95%;
+}
+
+#phim {
+	position:fixed;
+	width:19px;
+	top:0px;
+	right:0px;
+	background-color: #CCC;
+	/*border-left:1px solid #777;*/
+	z-index:990;
+	/*box-shadow: 0px 0px 2px #777;*/
+	
+	/*-moz-transition: width .5s, padding-left 1s, background-color 1s;
+	-moz-transition-delay: .7s;
+	-webkit-transition: width .5s, padding-left 1s, background-color 1s;
+	-webkit-transition-delay: .7s;
+	-o-transition: width .5s, padding-left 1s, background-color 1s;
+	-o-transition-delay: .7s;*/
+	transition: width .5s, padding-left 1s, background-color 1s;
+	transition-delay: .7s;
+	
+	
+}
+
+#phim:hover{
+	width:180px;
+	padding-left:15px;
+	background-color: #EEE;
+	
+	/*-moz-transition: width .5s, padding-left 1s, background-color 1s;
+	-moz-transition-delay: .3s;
+	-webkit-transition: width .5s, padding-left 1s, background-color 1s;
+	-webkit-transition-delay: .3s;
+	-o-transition: width .5s, padding-left 1s, background-color 1s;
+	-o-transition-delay: .3s;*/
+	
+	transition: width .5s, padding-left 1s, background-color 1s;
+	transition-delay: .3s;
+}
+/*
+  For flot diagrams
+*/
+#contentScreen .legend table,
+#windows .legend table{
+	width: auto;
+}

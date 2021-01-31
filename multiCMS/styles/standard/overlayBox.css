@@ -1,0 +1,88 @@
+#lightOverlay, .lightOverlay {
+	position:fixed;
+	top:0px;
+	left:0px;
+	z-index:98;
+    width: 100%;
+    height: 100%;
+	background-color:white;
+	color:#888;
+}
+
+#darkOverlay, .darkOverlay {
+	position:fixed;
+	top:0px;
+	left:0px;
+	z-index:98;
+    width: 100%;
+    height: 100%;
+	background-color:black;
+	color:#888;
+}
+
+.loginWindow {
+	width:100%;
+}
+
+#boxInOverlay {
+	position:fixed;
+	margin:auto;
+	top:4px;
+	z-index:99;
+	width:430px;
+	padding:20px;
+	/*padding:4px;
+	border-style:solid;
+	border-width:1px;
+	
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	
+	-moz-box-shadow: 0px 0px 4px 1px #999;
+	-webkit-box-shadow: 0px 0px 4px 1px #999;
+	box-shadow: 0px 0px 4px 1px #999;*/
+	box-shadow: 0px 0px 0px 8px rgba(200, 200, 200, .5);
+	/*border-top-left-radius:5px;
+	border-top-right-radius:5px;*/
+	border-color: #777;
+	border-style:solid;
+	border-width:1px;
+}
+
+#boxInOverlay label {
+	text-align:left;
+}
+
+#boxInOverlay .loginLogo {
+	width:180px;
+	margin-left:calc(50% - 90px);
+	margin-bottom:1.2em;
+}
+
+#boxInOverlay .loginAction {
+	background-color:#EEE;
+	padding-left:5px;
+}
+
+#boxInOverlay .loginAction .bigButton {
+	border:0;
+	margin:-3px;
+	height:50px;
+	width:180px;
+	font-size:1.1em;
+	padding-left:10px;
+}
+
+#overlayText ul { /*PRESENTATION*/
+	margin-top:20px;
+	margin-bottom:20px;
+}
+
+#overlayText ul li { /*PRESENTATION*/
+	padding-left:20px;
+}
+
+/*#boxInOverlay td {
+	padding:7px;
+}*/
