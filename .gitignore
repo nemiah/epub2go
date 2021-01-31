@@ -1,3 +1,4 @@
 /nbproject/
 /system/IECache/**/*
+/system/DBData/Installation.pfdb.php
 /multiCMS/updateFramework.php
