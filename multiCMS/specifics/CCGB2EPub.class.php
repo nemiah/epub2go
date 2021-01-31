@@ -89,9 +89,9 @@ OT+=ML.charAt(MI.charCodeAt(j)-48);
 		$_GET["permalink"] = "";
 		$F->setSaveMultiCMS("Meldung abschicken", "/epub.furtmeier.it/go-next.png", get_class($this), "report", "function(transport){ if(multiCMS.checkResponse(transport)) { alert(transport.responseText); GB2EPub.hideReport(); } }");
 
-		$AC = anyC::get("EPubDL", "EPubDLDone", "0");
-		$AC->addOrderV3("EPubDLID", "ASC");
-		$AC->lCV3();
+		#$AC = anyC::get("EPubDL", "EPubDLDone", "0");
+		#$AC->addOrderV3("EPubDLID", "ASC");
+		#$AC->lCV3();
 		
 		$html = "
 			<script type=\"text/javascript\">
@@ -262,7 +262,7 @@ OT+=ML.charAt(MI.charCodeAt(j)-48);
 			/>
 			<p>In die Warteschlange werden Titel aufgenommen, die zu groß sind, um sofort umgewandelt zu werden und sich noch nicht im Speicher befinden.</p>
 			<p>Pro Nacht werden zehn Einträge der Warteschlange abgearbeitet. Wenn Sie einen Titel erneut zum Download eintragen, wird die Position in der Warteschlange angezeigt.</p>
-			<p>Die Warteschlange enthält momentan ".$AC->numLoaded()." ".($AC->numLoaded() == 1 ? "Eintrag" : "Einträge").".</p>
+			<p>Die Warteschlange enthält momentan 0 Einträge.</p>
 		</div>";
 
 		#echo phpinfo();
