@@ -158,7 +158,7 @@ try {
 		break;
 
 		case "TableDoesNotExistException":
-			emoFatalError("multiCMS kann leider eine oder mehrere Tabellen nicht finden","Die multiCMS Datenbank-Tabellen wurden vermutlich nicht korrekt angelegt.<br />Bitte benutzen Sie das Installations-Plugin im Admin-Bereich von <a href=\"$phpFWPath\">multiCMS</a>","multiCMS", $phpFWPath);
+			emoFatalError("multiCMS kann leider eine oder mehrere Tabellen nicht finden","Die multiCMS Datenbank-Tabellen (".$e->getTable().") wurden vermutlich nicht korrekt angelegt.<br />Bitte benutzen Sie das Installations-Plugin im Admin-Bereich von <a href=\"$phpFWPath\">multiCMS</a>","multiCMS", $phpFWPath);
 		break;
 
 		case "FieldDoesNotExistException":
