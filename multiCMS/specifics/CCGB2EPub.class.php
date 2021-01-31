@@ -208,7 +208,6 @@ class CCGB2EPub implements iCustomContent, iFormHandler {
 			<p style=\"margin-top:15px;\">Dieser Generator erzeugt aus den <a href=\"https://www.projekt-gutenberg.org\" target=\"_blank\">Projekt Gutenberg-Büchern</a> Dateien im ePub-Format, die Sie mit den meisten eBook-Readern problemlos lesen können.</p>
 			<p>Bitte tragen Sie in das obere Feld die URL zu der Projekt Gutenberg-Seite ein, die das erste Kapitel des Buches enthält. Anschließend benötigen Sie etwas Geduld, bis die Kapitel heruntergeladen und zu einem ePub zusammengefügt wurden.</p>
 			<p>Bookmarklet: <a href=\"javascript:void(window.open('http://www.epub2go.eu/?t='+encodeURIComponent(window.location.toString())))\">epub2go</a><br><small style=\"color:grey;\">Ziehen Sie den Link in Ihre Lesezeichen-Leiste und klicken Sie auf das Lesezeichen, um eine gerade geöffnete Gutenberg-Seite direkt an epub2go zu übergeben.</small></p>
-			<p><a href=\"https://www.open3a.de/page-Impressum\">Impressum</a></p>
 		</div>
 		<div id=\"ePub\" style=\"position:absolute;top:200px;left:650px;\">
 			<div id=\"ePubDLs\">Sie können die fertigen ePub-Dateien<br />anschließend hier herunterladen.</div>
