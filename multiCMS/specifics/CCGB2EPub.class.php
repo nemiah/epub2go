@@ -24,10 +24,6 @@ class CCGB2EPub implements iCustomContent, iFormHandler {
 		return "GB2EPub";
 	}
 
-	function scripts(){
-		return ["./multiCMSData/GB2EPub.js"];
-	}
-	
 	function getCMSHTML(Seite $Seite = null, Content $Content = null){
 		$target = filter_input(INPUT_GET, "t");
 		
