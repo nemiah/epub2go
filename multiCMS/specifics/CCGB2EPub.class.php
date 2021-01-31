@@ -14,8 +14,6 @@
 
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- *  2007 - 2015, Rainer Furtmeier - Rainer@Furtmeier.IT
  */
 
 class CCGB2EPub implements iCustomContent, iFormHandler {
@@ -56,10 +54,6 @@ class CCGB2EPub implements iCustomContent, iFormHandler {
 		$_GET["permalink"] = "";
 		$F->setSaveMultiCMS("Meldung abschicken", "/multiCMSData/go-next.png", get_class($this), "report", "function(transport){ if(multiCMS.checkResponse(transport)) { alert(transport.responseText); GB2EPub.hideReport(); } }");
 
-		#$AC = anyC::get("EPubDL", "EPubDLDone", "0");
-		#$AC->addOrderV3("EPubDLID", "ASC");
-		#$AC->lCV3();
-		
 		$html = "
 			<script type=\"text/javascript\">
 				Ajax.Responders.register({
@@ -78,6 +72,8 @@ class CCGB2EPub implements iCustomContent, iFormHandler {
 					}
 				});
 				
+				console.log($);
+
 				window.onload = function(){
 					".($target ? "GB2EPub.doIT();" : "")."
 				}
@@ -96,27 +92,17 @@ class CCGB2EPub implements iCustomContent, iFormHandler {
 				left:630px;
 				width:310px;
 
-				-moz-border-radius: 9px;
-				-webkit-border-radius: 9px;
 				border-radius: 9px;
 
-
-				-moz-transform: rotate(2deg);
-				-o-transform: rotate(2deg);
-				-webkit-transform: rotate(2deg);
-				-ms-transform: rotate(2deg);
 				transform: rotate(2deg);
 
-				filter:  progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=0.9993908270190958, M12=-0.03489949670250097, M21=0.03489949670250097, M22=0.9993908270190958);
-				-ms-filter: \"progid:DXImageTransform.Microsoft.Matrix(M11=0.9993908270190958, M12=-0.03489949670250097, M21=0.03489949670250097, M22=0.9993908270190958,sizingMethod='auto expand')\";
+				filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=0.9993908270190958, M12=-0.03489949670250097, M21=0.03489949670250097, M22=0.9993908270190958);
 
 				zoom: 1;
 
 				border:1px solid #c0c0c0;
 				padding:5px;
 
-				-moz-box-shadow: 2px 2px 4px #000000;
-				-webkit-box-shadow: 2px 2px 4px #000000;
 				box-shadow: 2px 2px 4px #000000;
 			}
 
