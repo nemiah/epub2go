@@ -57,7 +57,7 @@ class CCGB2EPub implements iCustomContent, iFormHandler {
 		$I->onblur("if(this.value == '') this.value = '$default';");
 		$I->id("spiegelURL");
 
-		$B = new Button("epub erzeugen", "/epub.furtmeier.it/go-next.png");
+		$B = new Button("epub erzeugen", "/multiCMSData/go-next.png");
 		$B->type("icon");
 		$B->style("float:right;cursor:pointer;");
 		$B->onclick("GB2EPub.doIT();");
@@ -74,7 +74,7 @@ class CCGB2EPub implements iCustomContent, iFormHandler {
 		$F->setType("description", "textarea");
 
 		$_GET["permalink"] = "";
-		$F->setSaveMultiCMS("Meldung abschicken", "/epub.furtmeier.it/go-next.png", get_class($this), "report", "function(transport){ if(multiCMS.checkResponse(transport)) { alert(transport.responseText); GB2EPub.hideReport(); } }");
+		$F->setSaveMultiCMS("Meldung abschicken", "/multiCMSData/go-next.png", get_class($this), "report", "function(transport){ if(multiCMS.checkResponse(transport)) { alert(transport.responseText); GB2EPub.hideReport(); } }");
 
 		#$AC = anyC::get("EPubDL", "EPubDLDone", "0");
 		#$AC->addOrderV3("EPubDLID", "ASC");
@@ -213,13 +213,13 @@ class CCGB2EPub implements iCustomContent, iFormHandler {
 		<div id=\"ePub\" style=\"position:absolute;top:200px;left:650px;\">
 			<div id=\"ePubDLs\">Sie können die fertigen ePub-Dateien<br />anschließend hier herunterladen.</div>
 			<div id=\"beta\" style=\"display:none;\">
-				<p>Dieser Generator ist <b>BETA</b> und hofft auf Ihre Unterstützung! Wenn Sie eine ePub-Datei mit fehlerhaften Formatierungen oder fehlenden<br />Inhalten finden, verwenden Sie bitte das<br /><img src=\"/epub.furtmeier.it/flagG.png\" style=\"margin-bottom:-3px;\" />-Symbol oder melden Sie sich im <a href=\"http://forum.furtmeier.it/viewforum.php?f=6\">Forum</a>.</p>
+				<p>Dieser Generator ist <b>BETA</b> und hofft auf Ihre Unterstützung! Wenn Sie eine ePub-Datei mit fehlerhaften Formatierungen oder fehlenden<br />Inhalten finden, verwenden Sie bitte das<br /><img src=\"/multiCMSData/flagG.png\" style=\"margin-bottom:-3px;\" />-Symbol oder melden Sie sich im <a href=\"http://forum.furtmeier.it/viewforum.php?f=6\">Forum</a>.</p>
 			</div>
 		</div>
-		<div id=\"loader\" style=\"position:absolute;top:135px;left:445px;display:none;\"><img src=\"/epub.furtmeier.it/ajax-loader.gif\" /></div>
+		<div id=\"loader\" style=\"position:absolute;top:135px;left:445px;display:none;\"><img src=\"/multiCMSData/ajax-loader.gif\" /></div>
 		<div id=\"reportWindow\" style=\"display:none;\">
 			<img
-				src=\"/epub.furtmeier.it/cross.png\"
+				src=\"/multiCMSData/cross.png\"
 				onclick=\"GB2EPub.hideReport();\"
 				style=\"float:right;cursor:pointer;\"
 				alt=\"Schließen\"
@@ -232,7 +232,7 @@ class CCGB2EPub implements iCustomContent, iFormHandler {
 		
 		<div id=\"queueInfoWindow\" style=\"display:none;\">
 			<img
-				src=\"/epub.furtmeier.it/cross.png\"
+				src=\"/multiCMSData/cross.png\"
 				onclick=\"GB2EPub.hideQueueInfo();\"
 				style=\"float:right;cursor:pointer;\"
 				alt=\"Schließen\"
@@ -290,14 +290,14 @@ class CCGB2EPub implements iCustomContent, iFormHandler {
 				$link = "
 					
 					<a href=\"/index.php?formID=nix&HandlerName=CCGB2EPub&action=download&FN=%FILENAME\">
-						<img src=\"/epub.furtmeier.it/go-down.png\" style=\"margin-top:-3px;float:left;margin-right:10px;\" />
+						<img src=\"/multiCMSData/go-down.png\" style=\"margin-top:-3px;float:left;margin-right:10px;\" />
 						%FILENAME
 					</a>
 					<img
-						src=\"/epub.furtmeier.it/flagG.png\"
+						src=\"/multiCMSData/flagG.png\"
 						style=\"margin-left:10px;margin-bottom:-3px;cursor:pointer;\"
-						onmouseover=\"this.src='/epub.furtmeier.it/flag.png';\"
-						onmouseout=\"this.src='/epub.furtmeier.it/flagG.png';\"
+						onmouseover=\"this.src='/multiCMSData/flag.png';\"
+						onmouseout=\"this.src='/multiCMSData/flagG.png';\"
 						onclick=\"GB2EPub.showReport('".addslashes($P->getTitle())."', '".addslashes($P->getAuthor())."');\"
 						alt=\"Fehlerhafte Datei melden\"
 						title=\"Fehlerhafte Datei melden\"
