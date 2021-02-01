@@ -160,7 +160,7 @@ class gbSpiegelParserGUI implements iGUIHTML2, iEPubParser {
 		 */
 		$HS = new HTMLSlicer(new GBTidy($spiegelURL));
 
-		$Kapitelanzahl = $this->findChapterNumber($HS);
+		#$Kapitelanzahl = $this->findChapterNumber($HS);
 		/*if($Kapitelanzahl > 50 AND !$force){
 			$AC = anyC::get("EPubDL", "EPubDLLink", $spiegelURL);
 			$AC->addAssocV3("EPubDLDone", "=", "0");
