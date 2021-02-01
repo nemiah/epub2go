@@ -91,8 +91,8 @@ class gbSpiegelParserGUI implements iGUIHTML2, iEPubParser {
 			$paragraph = $P->asXML();
 			$paragraph = $this->findFootnotes($paragraph);
 			$paragraph = $this->findAnnotations($paragraph);
-			echo ($paragraph);
-			#$EP->addParagraph($paragraph);
+			
+			echo $paragraph;
 		}
 
 		print_r($this->makeFootnotesParagraph());
@@ -102,10 +102,7 @@ class gbSpiegelParserGUI implements iGUIHTML2, iEPubParser {
 			$zipExe = dirname(__FILE__)."/zip.exe";
 			echo "ZIP:\t\t<span style=\"".(file_exists($zipExe) ? "color:green;" : "color:red;")."\">".$zipExe."</span>\n";
 		}
-		#echo "\n\n";
-
-		#print_r(htmlentities($HS->getStructure()->asXML()));
-
+		
 		echo "</pre>";
 	}
 
@@ -126,17 +123,11 @@ class gbSpiegelParserGUI implements iGUIHTML2, iEPubParser {
 			OR $spiegelURL == "https://www.projekt-gutenberg.org/...")
 			die("error:'Bitte tragen Sie die Adresse zu einem Buch auf https://www.projekt-gutenberg.org ein'");
 		
-		#$url = parse_url($spiegelURL);
-		#parse_str($url["query"], $query);
 		$ex = explode("/", $spiegelURL);
 		$this->URL = $spiegelURL;
-		#var_dump($ex);
 		
 		$BID = $ex[3]."_".$ex[4];
-		#if(strpos($BID, "-") !== false){
-		#	$ex2 = explode("-", $BID);
-		#	$BID = $ex2[count($ex2) - 1];
-		#}
+
 		/**
 		 * Die ePub-Datei wurde bereits erstellt
 		 */
@@ -161,8 +152,6 @@ class gbSpiegelParserGUI implements iGUIHTML2, iEPubParser {
 			if(file_exists($readyPath.trim($file[0])))
 				return trim($file[0]);
 		}
-
-		#$ex[5] = "chap001.html";
 		
 		$spiegelURL = implode("/", $ex);
 		
@@ -191,9 +180,7 @@ class gbSpiegelParserGUI implements iGUIHTML2, iEPubParser {
 		
 		$Title = $this->title = $this->findTitle($HS);
 		$Author = $this->author = $this->findAuthor($HS);
-		#var_dump($Title);
-		#var_dump($Author);
-		#die();
+		
 		/**
 		 * Band auslesen, falls vorhanden
 		 */
@@ -296,8 +283,6 @@ class gbSpiegelParserGUI implements iGUIHTML2, iEPubParser {
 		 */
 		$filename = $EP->pubify();
 		file_put_contents($readyPath.$BID.".lib", $filename."\n$this->author\n$this->title");
-		#chmod($readyPath.$BID.".lib", 0666);
-		#chmod($filename, 0666);
 		
 		if($filename == $BID."_-_.epub")
 			throw new Exception("Der Download ist fehlgeschlagen, bitte versuchen Sie es zu einem späteren Zeitpunkt erneut.");
@@ -389,12 +374,6 @@ class gbSpiegelParserGUI implements iGUIHTML2, iEPubParser {
 	}
 	
 	private function findChapter($HS){
-		#$Info = $HS->getTag("//ul[@class='gbnav']//li[@class='active']//a");
-		#$Chapter = $Info[0]."";
-		#if(strpos($Chapter, "Kapitel") !== 0)
-		#	return preg_replace("/(?:\s|&nbsp;)+/", " ", $Chapter);
-		
-		
 		$Info2 = $HS->getTag("//div[@id='gutenb']/h2[@class='title']");
 		if(isset($Info2[0]))
 			$Info = $Info2;
@@ -402,7 +381,6 @@ class gbSpiegelParserGUI implements iGUIHTML2, iEPubParser {
 		$Info3 = $HS->getTag("//div[@id='gutenb']/h3");
 		if(isset($Info3[0]))
 			$Info = $Info3;
-		#var_dump($Info3);
 		$Chapter = $Info[0]."";
 		$Chapter = preg_replace("/(?:\s|&nbsp;)+/", " ", $Chapter);
 
@@ -410,12 +388,6 @@ class gbSpiegelParserGUI implements iGUIHTML2, iEPubParser {
 	}
 	
 	private function findChapterSub($HS){
-		#$Info = $HS->getTag("//ul[@class='gbnav']//li[@class='active']//a");
-		#$Chapter = $Info[0]."";
-		#if(strpos($Chapter, "Kapitel") !== 0)
-		#	return preg_replace("/(?:\s|&nbsp;)+/", " ", $Chapter);
-		
-		#if(!isset($Info[0]))
 		$Info = $HS->getTag("//div[@id='gutenb']/h2");
 		
 		if(!isset($Info[0]))
@@ -424,7 +396,6 @@ class gbSpiegelParserGUI implements iGUIHTML2, iEPubParser {
 		if(!isset($Info[0]))
 			return null;
 		
-		#$Info = $HS->getTag("//div[@id='gutenb']");
 		$Chapter = $Info[0]."";
 		$Chapter = preg_replace("/(?:\s|&nbsp;)+/", " ", $Chapter);
 
@@ -434,35 +405,20 @@ class gbSpiegelParserGUI implements iGUIHTML2, iEPubParser {
 	#private $lastLink = null;
 	private function findLink($HS, $isfirstPage = true){
 		$KLs = $HS->getTag("//div[@id='gutenb']/a");
-		#echo "<pre>";
+
 		$nextLink = null;
 		foreach($KLs AS $link){
-			#print_r($link);
 			if(strpos($link."", "weiter") !== false)
 				$nextLink = $link->attributes()["href"]."";
 		}
-		#echo "</pre>";
-		#var_dump($nextLink);
-		#if($isfirstPage AND isset($KLs[0]))
-		#$nextLink = $KLs[count($KLs) - 1]."";
-
-		#if($this->lastLink !== null AND $this->lastLink == $nextLink)
-		#	return null;
 		
 		$this->lastLink = $nextLink;
-			
-		#if(!$isfirstPage AND count($KLs) != 2)
-		#	return null;
-		#if(!$isfirstPage AND count($KLs) == 2)
-		#	$nextLink = $KLs[1]."";
-
+		
 		return $nextLink;
 	}
 
 	private function findParagraphs($HS){
 		$P = $HS->getTag("//div[@id='gutenb']/p | //div[@id='gutenb']/img | //div[@id='gutenb']/h4 | //div[@id='gutenb']/h3 | //div[@id='gutenb']/h2 | //div[@id='gutenb']/h1 | //div[@id='gutenb']/h2[@class='title'] | //div[@id='gutenb']/h5 | //div[@id='gutenb']/table | //div[@id='gutenb']/div | //div[@id='gutenb']/ol | //div[@id='gutenb']/ul | //div[@id='gutenb']/li | //div[@id='gutenb']/blockquote");
-
-		#if($P == null) $P = $HS->getTag("//div[@id='gb_data']/p | //div[@id='gb_data']/h4 | //div[@id='gb_data']/h1 | //div[@id='gb_data']/h5 | //div[@id='gb_data']/table | //div[@id='gb_data']/div | //div[@id='gb_data']/ol | //div[@id='gb_data']/ul | //div[@id='gb_data']/li | //div[@id='gb_data']/blockquote");
 
 		return $P;
 	}
@@ -520,17 +476,10 @@ class gbSpiegelParserGUI implements iGUIHTML2, iEPubParser {
 		$Title = str_replace("(", "", $Title);
 		$Title = str_replace(")", "", $Title);
 
-		#if(!isset($T[0])){
-		#	$Title = $HS->getTag("//div[@id='bookcoll_title']/b");
-		#	return str_replace("\n", " ", trim($Title[0].""));
-		#}
-
 		return preg_replace("/, Band [0-9]/", "", $Title);
 	}
 
 	private function findCSS($HS){
-		#<link href="../../css/prosa.css" type="text/css" rel="stylesheet" />
-		
 		$A = $HS->getTag("//link[@type='text/css']");
 		
 		if(!isset($A[0]))
@@ -551,16 +500,6 @@ class gbSpiegelParserGUI implements iGUIHTML2, iEPubParser {
 		return strip_tags($Author);
 	}
 
-	#private function findISBN($HS){
-		#$I = $HS->getTag("//div[@id='metadata']/table/tr/td/b[text()='isbn']/parent::*/following-sibling::*");
-	#	if(!isset($I[0]))
-	#		return null;
-		
-	#	$ISBN = $I[0]."";#$HS->getTag("//meta[@name='isbn']");
-
-	#	return strip_tags($ISBN);#[0]["content"];
-	#}
-
 	public function getAuthor(){
 		return $this->author;
 	}
@@ -571,11 +510,8 @@ class gbSpiegelParserGUI implements iGUIHTML2, iEPubParser {
 	
 	public function findBase($HS){
 		return dirname($this->URL)."/";
-		#$base = $HS->getTag("//base");
 		
-		#$attributes = $base[0]->attributes();
-		
-		return "/";#$attributes->href[0]."";#[0]["content"];
+		return "/";
 	}
 }
 
@@ -589,7 +525,6 @@ class GBTidy extends HTMLTidy {
 			$this->content = str_replace("</body>", "</div></body>", $this->content);
 		}
 		
-		#$this->content = utf8_decode($this->content);
 		$this->content = preg_replace("/<hr size=\"1\" color=\"#808080\">/", "<div id=\"gutenb\">", $this->content, 1);
 		$this->content = preg_replace("/<hr size=\"1\" color=\"#808080\">/", "</div>", $this->content, 1);
 		
@@ -599,34 +534,8 @@ class GBTidy extends HTMLTidy {
 		$this->content = str_replace("<tt>", "<span class=\"teletype\">", $this->content);
 		$this->content = str_replace("</tt>", "</span>", $this->content);
 
-		#echo ($this->content);
-		#die();
-		#$hasInnerHTML = strpos($this->content, "<div id=\"gb_texte\"><html><head>");
-
-		#if($hasInnerHTML !== false){
-		#	$this->content = str_replace("<div id=\"gb_texte\"><html><head>", "<div id=\"gb_texte\">", $this->content);
-		#	$this->content = str_replace("</p></body></html></div>", "</p></div>", $this->content);
-		#}
-
-		#$this->content = preg_replace("/<div class=\"chapter\" id=\"ch[0-9]*\">/", "", $this->content);
-		#$this->content = preg_replace("/<div class=\"chapter\" id=\"chap[0-9]*\">/", "", $this->content);
-		#$this->content = preg_replace("/<div id=\"gn_lnk_print\"><a href=\"\?id=[0-9]*&amp;xid=[0-9]*&amp;kapitel=[0-9]*&amp;cHash=[a-zA-Z0-9]*\" target=\"_blank\">Druckversion<\/a><\/div>/", "", $this->content);
-		#$this->content = preg_replace("/<div align=\"right\"><a href=\"\?id=[0-9]*&amp;xid=[0-9]*&amp;kapitel=[0-9]*&amp;cHash=[a-zA-Z0-9]*\" target=\"_blank\">Druckversion<\/a><\/div>/", "", $this->content);
-		#$this->content = preg_replace("/<div id=\"ch[0-9]*\" class=\"chapter\">/", "", $this->content);
-		#$this->content = preg_replace("/<div id=\"chap[0-9]*\" class=\"chapter\">/", "", $this->content);
-		
-		#if(strpos($this->content, "id=\"gb_texte\"") === false)
-		#	$this->content = preg_replace("/<div class=\"part\" id=\"teil[0-9]*\">/", "<div id=\"gb_texte\">", $this->content);
-
-
 		$this->removeTag("script");
-		#$this->removeTag("spangenberg");
-		#$this->removeTag("meta");
-		#$this->removeTag("link");
 		$this->removeTag("noscript");
-		#$this->removeTag("gb_meta");
-		#$this->content = str_replace("gb_meta", "meta", $this->content);
-		#$this->content = str_replace("<doc>", "", $this->content);
 		$this->removeComments();
 	}
 }
