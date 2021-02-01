@@ -24,6 +24,8 @@ Zum Erstellen der Seite bitte die Datei setup.sql in die Datenbank importieren. 
 
 Debugging: Als Benutzer gibt es nach der Anmeldung einen Reiter "ePub", dort kann nach der Eingabe der Adresse zum Buch die Debugging-Ausgabe gestartet werden. Dazu wird in der Datei /multiCMS/ubiquitous/EPub/gbSpiegelParserGUI.class.php die Methode gbSpiegelParserGUI::debug() aufgerufen.
 
+Sämtliche Logik zum Verarbeiten der Quelldaten befindet sich in den Methoden der Klasse gbSpiegelParserGUI.
+
 Wenn der HTML-Code vor der Verarbeitung angepasst werden soll, dann kann dies in der Methode GBTidy::cleanUp() eingefügt werden. Die Klasse "GBTidy" befindet sich in der Datei /multiCMS/ubiquitous/EPub/gbSpiegelParserGUI.class.php ganz unten.
 
 Pull requests sind willkommen, die Daten der Bücher sind mitunter recht inhomogen.
