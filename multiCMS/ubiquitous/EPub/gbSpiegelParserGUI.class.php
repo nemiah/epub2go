@@ -161,7 +161,7 @@ class gbSpiegelParserGUI implements iGUIHTML2, iEPubParser {
 		$HS = new HTMLSlicer(new GBTidy($spiegelURL));
 
 		$Kapitelanzahl = $this->findChapterNumber($HS);
-		if($Kapitelanzahl > 50 AND !$force){
+		/*if($Kapitelanzahl > 50 AND !$force){
 			$AC = anyC::get("EPubDL", "EPubDLLink", $spiegelURL);
 			$AC->addAssocV3("EPubDLDone", "=", "0");
 			$InQueue = $AC->getNextEntry();
@@ -176,7 +176,7 @@ class gbSpiegelParserGUI implements iGUIHTML2, iEPubParser {
 			}
 			
 			throw new Exception("Der gewünschte Titel befindet sich bereits in der Warteschlange an Position ".mEPubDL::getLinkPosition($spiegelURL).".");
-		}
+		}*/
 		
 		$Title = $this->title = $this->findTitle($HS);
 		$Author = $this->author = $this->findAuthor($HS);
