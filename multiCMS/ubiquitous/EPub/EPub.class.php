@@ -186,10 +186,21 @@ class EPub {
 
 	}
 
+
 	private function makeDLImages(){
-		foreach($this->images AS $P)
-			copy($P, $this->contentBaseDir.basename($P));
+		foreach($this->images AS $P) {
+//			copy($P, $this->contentBaseDir.basename($P));
+// Copy alleine funktioniert nicht mehr, daher curl (2022 - 01 - 16 phi [φ])
 			
+			$ch = curl_init($P);
+
+			$fp = fopen($this->contentBaseDir.baseName($P), 'wb');
+			curl_setopt($ch, CURLOPT_FILE, $fp);
+			curl_setopt($ch, CURLOPT_HEADER, 0);
+			curl_exec($ch);
+			curl_close($ch);
+			fclose($fp);    
+		} // end foreach
 	}
 
 	private function makeContainerXml($dir){

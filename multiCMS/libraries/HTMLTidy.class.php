@@ -26,9 +26,37 @@ class HTMLTidy {
 	protected $isUTF8 = false;
 
 	function __construct($uri = null){
-		if($uri != null)
-			$this->content = file_get_contents($uri);
+		if($uri != null) {
+			   // file_get_contents($uri) funktioniert komischerweise seit 2021 nicht mehr!
+			   //   daher folgendes entfernt:
+			   //  $this->content = file_get_contents($uri);
+
+			  $this->content = $this->curlGETContent($uri);
+
+		} // END if
+	}// end __construct 
+
+
+	private function curlGETContent($uri) {
+   		  	  $ch = curl_init();
+			  curl_setopt($ch, CURLOPT_URL, $uri);
+			  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			  curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+			  curl_setopt($ch, CURLOPT_USERPWD, "user:pass");
+			  $result = curl_exec($ch);
+			 curl_close($ch);	  
+			return $result;
 	}
+
+	// 2021 phi eingebaut, um den Fehler zu finden, dass file_get_contents nicht mehr funktioniert!
+	// Die Lösung war 'curl', wegen den Zertifikaten (φ 2021)
+	private function debug2021($message){
+		 $fp = fopen('/var/www/epub2go/epub2go/multiCMS/ubiquitous/debug2021.txt', 'a') or die("Unable to open file!");
+ 		 fwrite($fp, $message);
+		 fwrite($fp, "\n");
+ 		 fclose($fp);
+	}
+
 
 	function setContent($text){
 		$this->content = $text;
@@ -67,8 +95,11 @@ class HTMLTidy {
 
 	function getCleaned(){
 		$this->tidy();
-		
+//		echo 'DEBUGG ((' . $this-cleanedFile . "))";
 		return file_get_contents($this->cleanedFile);
+// DEBUG PHI dez. 2021
+//		return  $this->curlGETContent($this->cleanedFile);
+		
 	}
 
 	function removeTag($tag){

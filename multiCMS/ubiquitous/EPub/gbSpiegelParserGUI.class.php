@@ -18,6 +18,8 @@
  *  2007 - 2020, open3A GmbH - Support@open3A.de
  */
 
+
+
 class gbSpiegelParserGUI implements iGUIHTML2, iEPubParser {
 	private $title;
 	private $URL;
@@ -42,6 +44,14 @@ class gbSpiegelParserGUI implements iGUIHTML2, iEPubParser {
 		$B->windowRme("gbSpiegelParser", -1, "debug", array("$('epubForm').spiegelURL.value"));
 
 		return $ST.$F."<div id=\"ausgabe\"></div>";
+	}
+
+/* Debug Function eingebaut, um Fehler besser einzugrenzen, welche nur ONLINE auf epub2go.eu passieren. (phi 2021)*/
+	private function debug2021($message){
+		 $fp = fopen('/var/www/epub2go/epub2go/multiCMS/ubiquitous/debug2021.txt', 'a') or die("Unable to open file!");
+ 		 fwrite($fp, $message);
+		 fwrite($fp, "\n");
+ 		 fclose($fp);
 	}
 
 	public function debug($spiegelURL){
@@ -158,7 +168,9 @@ class gbSpiegelParserGUI implements iGUIHTML2, iEPubParser {
 		/**
 		 * HTML laden
 		 */
-		$HS = new HTMLSlicer(new GBTidy($spiegelURL));
+		$TmpGBTidy = new GBTidy($spiegelURL);
+		$HS = new HTMLSlicer($TmpGBTidy);
+
 
 		#$Kapitelanzahl = $this->findChapterNumber($HS);
 		/*if($Kapitelanzahl > 50 AND !$force){
